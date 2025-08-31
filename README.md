@@ -10,3 +10,5 @@ Capture the person who unlock your laptop!!!!!
 **動作:程式或指令碼填有opencv和numpy環境的python，新增引數填UnlockCapture.py的路徑**<br>
 **條件:關閉需要接上電源才能跑的限制**<br>
 **按確定**<br>
+**下次解鎖會自動捕捉鏡頭**
+**若無鏡頭程式不會運行**
