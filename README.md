@@ -14,3 +14,4 @@ Capture the person who unlock your laptop!!!!!<br>
 **按確定**<br>
 **下次解鎖會自動捕捉鏡頭**<br>
 **若無鏡頭程式不會運行，電腦也請設置密碼**
+**拍下來的圖片會存在D://hahaha裡**
