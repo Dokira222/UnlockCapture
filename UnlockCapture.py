@@ -1,29 +1,28 @@
 import cv2
-import numpy as np
-detector = cv2.CascadeClassifier('xml/haarcascade_frontalface_default.xml')  # 載入人臉追蹤模型
-recog = cv2.face.LBPHFaceRecognizer_create()      # 啟用訓練人臉模型方法
-faces = []   # 儲存人臉位置大小的串列
-ids = []     # 記錄該人臉 id 的串列
+import os
+import datetime
 
-for i in range(1,31):
-    img = cv2.imread(f'face01/{i}.jpg')           # 依序開啟每一張蔡英文的照片
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 色彩轉換成黑白
-    img_np = np.array(gray,'uint8')               # 轉換成指定編碼的 numpy 陣列
-    face = detector.detectMultiScale(gray)        # 擷取人臉區域
-    for(x,y,w,h) in face:
-        faces.append(img_np[y:y+h,x:x+w])         # 記錄蔡英文人臉的位置和大小內像素的數值
-        ids.append(1)                             # 記錄蔡英文人臉對應的 id，只能是整數，都是 1 表示蔡英文的 id 為 1
 
-for i in range(1,16):
-    img = cv2.imread(f'face02/{i}.jpg')           # 依序開啟每一張川普的照片
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 色彩轉換成黑白
-    img_np = np.array(gray,'uint8')               # 轉換成指定編碼的 numpy 陣列
-    face = detector.detectMultiScale(gray)        # 擷取人臉區域
-    for(x,y,w,h) in face:
-        faces.append(img_np[y:y+h,x:x+w])         # 記錄川普人臉的位置和大小內像素的數值
-        ids.append(2)                             # 記錄川普人臉對應的 id，只能是整數，都是 2 表示川普的 id 為 2
 
-print('training...')                              # 提示開始訓練
-recog.train(faces,np.array(ids))                  # 開始訓練
-recog.save('face.yml')                            # 訓練完成儲存為 face.yml
-print('ok!')
+cap = cv2.VideoCapture(0) # 若傳回的()裡是0、1、2，代表第幾顆視訊鏡頭
+picture_num = 1
+
+if not cap.isOpened():
+    print("攝影機無法開啟")
+    exit()
+
+if os.path.exists("D://hahaha") == False:
+    os.makedirs("D://hahaha")
+
+while picture_num < 10:
+    loc_dt = datetime.datetime.today() 
+    loc_dt_format = loc_dt.strftime("%Y_%m_%d__%H_%M_%S")
+    
+    ret, frame = cap.read() #會存兩個參數，(第一個是bool值，若有下一幀圖片，回傳true)，(第二個是讀圖片)
+    if ret:
+        frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5) # 縮放圖片
+        cv2.imwrite(f"D://hahaha/picture{loc_dt_format}.png", frame)
+        picture_num += 1
+        cv2.imshow("frame", frame)
+        cv2.waitKey(100)
+    
